@@ -14,7 +14,7 @@ const AddProduct = () => {
         const creationDateTime = from.creationDateTime.value;
         const product = {productImage, productName, description, price, category, brand, ratings, creationDateTime};
         console.log(product);
-        fetch('http://localhost:5000/add-product', {
+        fetch('https://dokani-server.vercel.app/add-product', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

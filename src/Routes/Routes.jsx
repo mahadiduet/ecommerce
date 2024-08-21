@@ -31,7 +31,7 @@ export const routes = createBrowserRouter([
             {
                 path:'/product',
                 element:<Products />,
-                loader: () => fetch('http://localhost:5000/all-product')
+                loader: () => fetch('https://dokani-server.vercel.app/all-product')
             },
             {
                 path:'/search',

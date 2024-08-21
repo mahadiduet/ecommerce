@@ -13,7 +13,7 @@ const SearchResultPage = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch(`http://localhost:5000/search?query=${query}`);
+                const response = await fetch(`https://dokani-server.vercel.app/search?query=${query}`);
                 const data = await response.json();
                 if(data.length === 0)
                 {
