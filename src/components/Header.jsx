@@ -1,17 +1,49 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
+
+    const [searchQuery, setSearchQuery] = useState('');
+    const navigate = useNavigate();
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        console.log('SSS:',searchQuery);
+        if (searchQuery.trim()) {
+            navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
+        }
+    };
 
     return (
         <header className="bg-white shadow-md">
             <div className="container flex items-center justify-between px-6 py-4 mx-auto">
                 {/* Logo */}
                 <div className="text-2xl font-bold text-gray-800">
-                    <a href="#" className="flex items-center space-x-2">
+                    <Link to="/" className="flex items-center space-x-2">
                         {/* <img src="https://via.placeholder.com/40" alt="Logo" className="w-10 h-10" /> */}
                         <span>Dokani</span>
-                    </a>
+                    </Link>
                 </div>
+
+                {/* Search Option */}
+                <form
+                    onSubmit={handleSearch}
+                    className="w-full max-w-md flex items-center"
+                >
+                    <input
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder="Search products..."
+                        className="w-full px-4 py-2 rounded-l-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <button
+                        type="submit"
+                        className="px-4 py-2 bg-blue-500 text-white rounded-r-lg hover:bg-blue-600 transition duration-300"
+                    >
+                        Search
+                    </button>
+                </form>
 
                 {/* Navigation Menu */}
                 <nav className="flex items-center space-x-6">

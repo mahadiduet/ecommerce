@@ -1,15 +1,13 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import Product from "../../../components/Product";
 import { GrCaretNext, GrCaretPrevious } from "react-icons/gr";
 
 const Products = () => {
-    const bio = useLoaderData();
+    const pro = useLoaderData();
     // console.log(bio);
-    const totalBiodata = bio.length;
-    console.log(totalBiodata);
-    const [products, setProducts] = useState(bio);
+    const totalProductdata = pro.length;
+    const [products, setProducts] = useState(pro);
 
     // Filter option
     const [priceRange, setPriceRange] = useState({ min: '', max: '' });
@@ -76,7 +74,6 @@ const Products = () => {
     // console.log('SSS:',indexOfFirstItem);
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
-    console.log('Curretn Items:', currentItems);
     const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
     const handlePageChange = (page) => {

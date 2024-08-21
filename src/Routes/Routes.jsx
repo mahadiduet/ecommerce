@@ -5,6 +5,7 @@ import Signup from "../Page/Signup/Signup";
 import Login from "../Page/Login/Login";
 import AddProduct from "../Page/Product/ProductUpload/AddProduct";
 import Products from "../Page/Product/Products/Products";
+import SearchResultPage from "../Page/Search/SearchResultPage/SearchResultPage";
 
 export const routes = createBrowserRouter([
     {
@@ -31,6 +32,10 @@ export const routes = createBrowserRouter([
                 path:'/product',
                 element:<Products />,
                 loader: () => fetch('http://localhost:5000/all-product')
+            },
+            {
+                path:'/search',
+                element:<SearchResultPage/>
             }
         ]
     }
