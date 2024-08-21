@@ -9,9 +9,10 @@ const AddProduct = () => {
         const description = from.description.value;
         const price = parseInt(from.price.value);
         const category = from.category.value;
+        const brand = from.brand.value;
         const ratings = parseInt(from.ratings.value);
         const creationDateTime = from.creationDateTime.value;
-        const product = {productImage, productName, description, price, category, ratings, creationDateTime};
+        const product = {productImage, productName, description, price, category, brand, ratings, creationDateTime};
         console.log(product);
         fetch('http://localhost:5000/add-product', {
             method: 'POST',
@@ -98,6 +99,21 @@ const AddProduct = () => {
                             <option value="laptop">Laptop</option>
                             <option value="keyboard">Keyboard</option>
                             <option value="mouse">Mouse</option>
+                        </select>
+                    </div>
+                    {/* Brand */}
+                    <div>
+                        <label htmlFor="brand" className="block text-sm font-medium text-gray-700">Brand</label>
+                        <select
+                            id="brand"
+                            name="brand"
+                            className="w-full px-4 py-2 mt-1 text-gray-900 bg-gray-200 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                        >
+                            <option value="">Select a brand</option>
+                            <option value="hp">HP</option>
+                            <option value="asus">Asus</option>
+                            <option value="apple">Apple</option>
+                            <option value="dell">Dell</option>
                         </select>
                     </div>
 

@@ -12,12 +12,12 @@ const Products = () => {
     const [products, setProducts] = useState(bio);
 
     // Filter option
-    const [ageRange, setAgeRange] = useState({ min: '', max: '' });
+    const [priceRange, setPriceRange] = useState({ min: '', max: '' });
     const [filteredData, setFilteredData] = useState([]);
-    const [minAge, setMinAge] = useState('');
-    const [maxAge, setMaxAge] = useState('');
-    const [gender, setGender] = useState('');
-    const [division, setDivision] = useState('');
+    const [minPrice, setMinPrice] = useState('');
+    const [maxPrice, setMaxPrcie] = useState('');
+    const [category, setCategory] = useState('');
+    const [brand, setBrand] = useState('');
 
 
     // Handle Sorting
@@ -33,7 +33,7 @@ const Products = () => {
             setProducts(sortedProduct);
         }
         if (newValue === "newest") {
-            const sortedProduct = [...products].sort((a, b) =>new Date(b.creationDateTime) - new Date(a.creationDateTime));
+            const sortedProduct = [...products].sort((a, b) => new Date(b.creationDateTime) - new Date(a.creationDateTime));
             setProducts(sortedProduct);
         }
     }
@@ -43,30 +43,28 @@ const Products = () => {
     const handleFilter = e => {
         e.preventDefault();
         const from = e.target;
-        const min_age = from.min_age.value;
-        const max_age = from.max_age.value;
-        const gender = from.gender.value;
-        // console.log(gender);
-        const division = from.division.value;
-        // console.log(min_age, max_age, gender, division);
-        setMinAge(min_age);
-        setMaxAge(max_age);
-        setGender(gender);
-        setDivision(division);
+        const min_price = from.min_price.value;
+        const max_price = from.max_price.value;
+        const category = from.category.value;
+        const brand = from.brand.value;
+        setMinPrice(min_price);
+        setMaxPrcie(max_price);
+        setCategory(category);
+        setBrand(brand);
     }
 
     useEffect(() => {
         const filtered = products.filter(item => {
-            const age = item.age;
+            const price = item.price;
             return (
-                (minAge === '' || age >= minAge) &&
-                (maxAge === '' || age <= maxAge) &&
-                (gender === '' || item.biodata_type === gender) &&
-                (division === '' || item.permanent_division === division)
+                (minPrice === '' || price >= minPrice) &&
+                (maxPrice === '' || price <= maxPrice) &&
+                (category === '' || item.category === category) &&
+                (brand === '' || item.brand === brand)
             );
         });
         setFilteredData(filtered);
-    }, [minAge, maxAge, gender, division, products]);
+    }, [minPrice, maxPrice, category, brand, products]);
 
 
     // Pagination state
@@ -92,55 +90,54 @@ const Products = () => {
                         <h2 className="text-lg font-bold mb-2">Filters</h2>
                         <form onSubmit={handleFilter}>
                             <div className="mb-4">
-                                <label className="block mb-1">Age Range</label>
+                                <label className="block mb-1">Price Range</label>
                                 <div className="flex">
                                     <input
                                         type="number"
                                         placeholder="Min"
-                                        name="min_age"
+                                        name="min_price"
                                         className="w-1/2 px-2 py-1 border rounded focus:outline-none focus:border-blue-400"
-                                        defaultValue={minAge}
-                                        onChange={(e) => setAgeRange(minAge)}
+                                        defaultValue={minPrice}
+                                        onChange={(e) => setMinPrice(minPrice)}
                                     />
                                     <input
                                         type="number"
                                         placeholder="Max"
-                                        name="max_age"
+                                        name="max_price"
                                         className="w-1/2 ml-2 px-2 py-1 border rounded focus:outline-none focus:border-blue-400"
-                                        value={ageRange.max}
-                                        onChange={(e) => setAgeRange({ ...ageRange, max: e.target.value })}
+                                        value={priceRange.max}
+                                        onChange={(e) => setPriceRange({ ...priceRange, max: e.target.value })}
                                     />
                                 </div>
                             </div>
                             <div className="mb-4">
-                                <label className="block mb-1">Gender</label>
+                                <label className="block mb-1">Category</label>
                                 <select
                                     className="w-full px-2 py-1 border rounded focus:outline-none focus:border-blue-400"
-                                    value={gender}
-                                    name="gender"
-                                    onChange={(e) => setGender(e.target.value)}
+                                    value={category}
+                                    name="category"
+                                    onChange={(e) => setCategory(e.target.value)}
                                 >
-                                    <option value="">Select Gender</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
+                                    <option value="">Select Category</option>
+                                    <option value="mobile">Mobile</option>
+                                    <option value="laptop">Laptop</option>
+                                    <option value="keyboard">Keyboard</option>
+                                    <option value="mouse">Mouse</option>
                                 </select>
                             </div>
                             <div className="mb-4">
-                                <label className="block mb-1">Division</label>
+                                <label className="block mb-1">Brand</label>
                                 <select
                                     className="w-full px-2 py-1 border rounded focus:outline-none focus:border-blue-400"
-                                    value={division}
-                                    name="division"
-                                    onChange={(e) => setDivision(e.target.value)}
+                                    value={brand}
+                                    name="brand"
+                                    onChange={(e) => setBrand(e.target.value)}
                                 >
-                                    <option value="">Select Division</option>
-                                    <option value="Dhaka">Dhaka</option>
-                                    <option value="Chattagram">Chattagram</option>
-                                    <option value="Rangpur">Rangpur</option>
-                                    <option value="Barisal">Barisal</option>
-                                    <option value="Khulna">Khulna</option>
-                                    <option value="Maymansign">Maymansign</option>
-                                    <option value="Sylhet">Sylhet</option>
+                                    <option value="">Select Brand</option>
+                                    <option value="hp">HP</option>
+                                    <option value="asus">Asus</option>
+                                    <option value="apple">Apple</option>
+                                    <option value="dell">Dell</option>
                                 </select>
                             </div>
                             <button
