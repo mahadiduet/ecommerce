@@ -14,7 +14,7 @@ const Product = ({ product }) => {
                         {/* <p className="my-2">Location: {location}</p> */}
                         <p className="my-2">Price: {price} Tk</p>
                     </div>
-                    <Link to={`/tourism-details/${_id}`}><button className="btn btn-primary w-full text-xl self-end">View Details</button></Link>
+                    <Link to={`#`}><button className="btn btn-primary w-full text-xl self-end">View Details</button></Link>
                 </div>
             </div>
         </div>
