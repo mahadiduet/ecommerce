@@ -7,11 +7,29 @@ const AddProduct = () => {
         const productName = from.productName.value;
         const productImage = from.productImage.value;
         const description = from.description.value;
-        const price = from.price.value;
+        const price = parseInt(from.price.value);
         const category = from.category.value;
-        const ratings = from.ratings.value;
+        const ratings = parseInt(from.ratings.value);
         const creationDateTime = from.creationDateTime.value;
-        console.log(productImage, productName, description, price, category, ratings, creationDateTime);
+        const product = {productImage, productName, description, price, category, ratings, creationDateTime};
+        console.log(product);
+        fetch('http://localhost:5000/add-product', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(product)
+        })
+            .then(res => res.json())
+            .then(data => {
+                // console.log(data);
+                if(data.insertedId){
+                    // toast.success('Tourism added successfull!');
+                    console.log('Product add successfully');
+                    from.reset();
+                }
+                
+            })
     }
 
     return (
