@@ -31,7 +31,7 @@ const Signup = () => {
                 // const user = { userEmail, createdAt, lastSignInTime }
 
                 // Data pass to MongoDB by API
-                // fetch('https://dokani-server.vercel.app/user', {
+                // fetch('http://localhost:5000/user', {
                 //     method: 'POST',
                 //     headers: {
                 //         'Content-Type': 'application/json',

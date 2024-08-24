@@ -1,18 +1,39 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../FirebaseProvider/FirebaseProvider";
 
 const Header = () => {
 
+    const { user, logout } = useContext(AuthContext);
     const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
 
     const handleSearch = (e) => {
         e.preventDefault();
-        console.log('SSS:',searchQuery);
+        console.log('SSS:', searchQuery);
         if (searchQuery.trim()) {
             navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
         }
     };
+
+
+
+    const profile = <>
+        <div>
+            <div className="dropdown dropdown-end">
+                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                    <div className="w-10 rounded-full">
+                        {user?.photoURL ? (<img alt="Tailwind CSS Navbar component" src={user.photoURL} />) : (<img alt="Tailwind CSS Navbar component" src="https://i.ibb.co/9rrBVK6/man.jpg" />)}
+                    </div>
+                </div>
+                <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                    <Link>{user?.displayName ? `${user.displayName}` : ''}</Link>
+                    <Link to='dashboard'>Dashboard</Link>
+                    <Link><button onClick={logout}>Logout</button></Link>
+                </ul>
+            </div>
+        </div>
+    </>
 
     return (
         <header className="bg-white shadow-md">
@@ -50,9 +71,11 @@ const Header = () => {
                     <Link to="/" className="text-gray-600 hover:text-gray-800">Home </Link>
                     <Link to="/product" className="text-gray-600 hover:text-gray-800">Product</Link>
                     <Link to="/addproduct" className="text-gray-600 hover:text-gray-800">Add Product</Link>
-                    <Link to="/signup" className="text-gray-600 hover:text-gray-800">Signup</Link>
-                    <Link to="/login" className="text-gray-600 hover:text-gray-800">Login</Link>
-
+                    {user ? '' : <>
+                        <Link to="/signup" className="text-gray-600 hover:text-gray-800">Signup</Link>
+                        <Link to="/login" className="text-gray-600 hover:text-gray-800">Login</Link>
+                    </>
+                    }
                     {/* Cart Icon */}
                     <a href="#" className="relative text-gray-600 hover:text-gray-800">
                         <svg
@@ -71,6 +94,8 @@ const Header = () => {
                         </svg>
                         <span className="absolute top-0 right-0 inline-flex items-center justify-center w-4 h-4 text-xs font-bold text-white bg-red-500 rounded-full">3</span>
                     </a>
+                    {/* Profile */}
+                    {user ? profile : ''}
                 </nav>
             </div>
         </header>

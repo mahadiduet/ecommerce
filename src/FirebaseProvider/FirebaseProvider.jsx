@@ -1,14 +1,15 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { createContext, useState } from "react";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
+import { createContext, useEffect, useState } from "react";
 import auth from "../firebase/Firebase.Config";
 
 export const AuthContext = createContext(null);
-const FirebaseProvider = ({children}) => {
+const FirebaseProvider = ({ children }) => {
 
     const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState(null);
 
     // Create User
-    const createUser = (email, password) =>{
+    const createUser = (email, password) => {
         setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password);
     }
@@ -27,12 +28,53 @@ const FirebaseProvider = ({children}) => {
         setLoading(true);
         return signInWithEmailAndPassword(auth, email, password);
     }
-    
+
+    // On Auth State Changed
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, currentUser => {
+            // const userEmail = currentUser?.email || user?.email;
+            // const loggedUser = { email: userEmail };
+            setUser(currentUser);
+            // console.log('current user:', currentUser);
+            setLoading(false);
+
+            // if (currentUser) {
+            //     console.log('Logger User: ', loggedUser);
+            //     axios.post('http://localhost:5000/jwt', loggedUser, { withCredentials: true })
+            //         .then(res => {
+            //             console.log('token response', res.data);
+            //         })
+            // }
+            // else {
+            //     axios.post('http://localhost:5000/logout', loggedUser, {
+            //         withCredentials: true
+            //     })
+            //         .then(res => {
+            //             console.log(res.data);
+            //         })
+            // }
+        });
+        return () => unsubscribe();
+    }, [])
+
+    // User Logout
+
+    const logout = () => {
+        setUser(null);
+        signOut(auth).then(() => {
+            console.log("Logout Successfully");
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
     const allValues = {
         createUser,
         updateUser,
         loginUser,
-        loading
+        logout,
+        loading,
+        user
     };
 
     return (
